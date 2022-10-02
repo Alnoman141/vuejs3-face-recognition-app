@@ -4,7 +4,24 @@
 
 <script>
 export default {
-
+  data(){
+    return {
+      user: {
+        id: '1',
+        name: 'noman'
+      }
+    }
+  },
+  mounted(){
+    this.getUser();
+  },
+  methods: {
+    async getUser(){
+      await this.$store.dispatch('userStore/getUser', this.user).then(res => {
+        console.log('res =>', res);
+      })
+    }
+  }
 }
 </script>
 

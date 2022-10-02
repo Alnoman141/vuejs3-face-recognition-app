@@ -1,15 +1,24 @@
-import { createStore } from 'vuex'
+export default {
+    namespaced: true,
+    state: {
+        user: {}
+    },
 
-// Create a new store instance.
-const store = createStore({
-    state() {
-        return {
-            count: 0
+    mutations: {
+        SET_USER: (state, user) => {
+            state.user = user;
         }
     },
-    mutations: {
-        increment(state) {
-            state.count++
+
+    actions: {
+        getUser({ state, commit }, data){
+            commit('SET_USER', data);
+            console.log(state.user);
         }
-    }
-})
+    },
+
+    getters: {
+
+    },
+
+}   
