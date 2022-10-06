@@ -2,11 +2,13 @@
   "name": "faceapp",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "vue": "^3.2.37",
@@ -15,6 +17,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
-    "vite": "^3.1.0"
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^9.6.0",
+    "prettier": "2.7.1",
+    "vite": "^3.1.0",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }
