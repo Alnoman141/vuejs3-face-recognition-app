@@ -1,5 +1,6 @@
 <template>
   <h1>Hello World</h1>
+  <small class="text-muted">With faded secondary text</small>
 </template>
 
 <script>
