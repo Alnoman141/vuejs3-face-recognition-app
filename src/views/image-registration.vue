@@ -20,7 +20,7 @@
             </div>
         </div>
         <p class="instraction-text">Take your selfie from three different angle for the verification step</p>
-      <button type="button" class="btn btn-submit">Next</button>
+      <router-link to="/capture-image"><button type="button" class="btn btn-submit">Next</button></router-link>
     </div>
   </div>
 </template>
@@ -30,10 +30,12 @@ export default {};
 </script>
 
 <style scoped>
+#image-registration-instraction {
+  text-align: center;
+}
 #image-registration-instraction .logo {
   margin: 80px 0px;
 }
-
 #image-registration-instraction .title {
   font-family: "Segoe UI";
   font-style: normal;

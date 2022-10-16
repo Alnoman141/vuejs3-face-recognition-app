@@ -93,7 +93,7 @@ export default {
 <style scoped>
 .camera-comp {
   width: 100%;
-  height: 525px;
+  height: 500px;
   background: #fffefe;
 }
 video.video,

@@ -15,55 +15,59 @@
       </div>
     </div>
     <div class="camera-frame">
-      <camera-component class="camera-component" />
-      <button class="btn btn-primary">Capture</button>
+      <camera-component id="camera-component" />
+      <button class="btn capture-btn">
+        <img src="@/assets/capture.png" class="img-fluid" alt="Instraction-2" />
+      </button>
     </div>
-    <div class="captured-images">
-        <div class="row">
-            <div class="col-4">
-                <img
-                src="@/assets/logo-icon.png"
-                class="img-fluid"
-                alt="Instraction-2"
-            />
-            </div>
-            <div class="col-4">
-                <img
-                src="@/assets/logo-icon.png"
-                class="img-fluid"
-                alt="Instraction-2"
-            />
-            </div>
-            <div class="col-4">
-                <img
-                src="@/assets/logo-icon.png"
-                class="img-fluid"
-                alt="Instraction-2"
-            />
-            </div>
-            <div class="col-4">
-                <img
-                src="@/assets/logo-icon.png"
-                class="img-fluid"
-                alt="Instraction-2"
-            />
-            </div>
-            <div class="col-4">
-                <img
-                src="@/assets/logo-icon.png"
-                class="img-fluid"
-                alt="Instraction-2"
-            />
-            </div>
-        </div>
+    <div class="captured-images row">
+      <div class="col-sm-3 col-4">
+        <img
+          src="@/assets/logo-icon.png"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+      </div>
+      <div class="col-sm-3 col-4">
+        <img
+          src="@/assets/logo-icon.png"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+      </div>
+      <div class="col-sm-3 col-4">
+        <img
+          src="@/assets/logo-icon.png"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+      </div>
+      <div class="col-sm-3 col-4">
+        <img
+          src="@/assets/logo-icon.png"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+      </div>
+      <div class="col-sm-3 col-4">
+        <img
+          src="@/assets/logo-icon.png"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+      </div>
     </div>
     <div class="buttons">
       <div class="row">
-        <div class="col-6">
-          <button class="btn btn-back">Back</button>
+        <div class="col-6 text-md-end">
+          <router-link to="/sign-up"
+            ><button class="btn btn-back">Back</button></router-link
+          >
         </div>
-        <div class="col-6">
-          <button class="btn btn-next">Next</button>
+        <div class="col-6 text-md-start">
+          <router-link to="/register-complete"
+            ><button class="btn btn-next">Next</button></router-link
+          >
         </div>
       </div>
     </div>
@@ -78,6 +82,9 @@ export default {
 </script>
 
 <style scoped>
+#capture-image {
+  text-align: center;
+}
 #capture-image .header {
   padding: 30px 0px;
 }
@@ -92,10 +99,7 @@ export default {
   margin: 0;
 }
 .camera-frame {
-    border: 1px solid red;
-}
-.camera-component {
-    border: 1px solid green;
+  position: relative;
 }
 .buttons button {
   font-family: "Segoe UI";
@@ -113,5 +117,35 @@ export default {
 .btn-back {
   background: transparent;
   border: 1px solid #7190ef;
+}
+.captured-images.row {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  align-self: center;
+  width: 100%;
+  overflow-x: scroll;
+  margin: 35px 0px;
+  padding: 20px 0px;
+}
+.col-sm-3,
+.col-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#capture-image .captured-images .col-sm-3 .img-fluid {
+  width: 90px;
+  height: 100%;
+}
+
+button.btn.capture-btn {
+  position: absolute;
+  bottom: -12%;
+  left: 50%;
+  transform: translate(-50%);
 }
 </style>

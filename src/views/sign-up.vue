@@ -1,17 +1,17 @@
 <template>
   <div id="sign-up">
-    <div class="logo">
+    <div class="logo text-center">
       <img src="@/assets/logo-icon.png" alt="Logo" />
     </div>
-    <h2 class="title">Sign Up</h2>
-    <p class="text">
+    <h2 class="title text-center">Sign Up</h2>
+    <p class="text text-center">
       Welcome to Grypas Employee App. Please follow the steps to sign up to
       system
     </p>
     <div class="sign-up-form">
       <form>
         <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
+          <label for="name" class="form-label text-start">Name</label>
           <input
             id="name"
             type="text"
@@ -20,7 +20,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="id" class="form-label">ID No.</label>
+          <label for="id" class="form-label text-start">ID No.</label>
           <input
             id="id"
             type="text"
@@ -29,7 +29,7 @@
           />
         </div>
 
-        <button type="button" class="btn btn-submit">Next</button>
+        <router-link to="/image-registration-instruction"><button type="button" class="btn btn-submit">Next</button></router-link>
       </form>
     </div>
   </div>
