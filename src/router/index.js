@@ -6,6 +6,7 @@ const SignupComponent = () => import('@/views/sign-up.vue');
 const ImageRegistration = () => import("@/views/image-registration.vue");
 const CaptureImage = () => import("@/views/capture-image.vue");
 const CompleteRegistration = () => import("@/views/registration-complete.vue");
+const Attendence = () => import("@/views/attendence.vue");
 
 
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
     path: "/register-complete",
     name: "completeRegister",
     component: CompleteRegistration,
+  },
+  {
+    path: "/attendence",
+    name: "attendence",
+    component: Attendence,
   },
   userRoutes,
 ];

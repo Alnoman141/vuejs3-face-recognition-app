@@ -8,7 +8,7 @@
             <router-link to="/sign-up"><button class="btn btn-back">Sign Up</button></router-link>
           </div>
           <div class="col-md-6 text-md-start">
-            <button class="btn btn-next">Smart Attendence</button>
+            <router-link to="/attendence"><button class="btn btn-next">Smart Attendence</button></router-link>
           </div>
         </div>
       </div>
