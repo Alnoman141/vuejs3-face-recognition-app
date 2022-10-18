@@ -5,28 +5,50 @@
     </div>
     <h2 class="title">Facial Verification</h2>
     <p class="text">
-      Aliquet nulla sed consectetur in malesuada fermentum id. Non non lacus enim risus sit.
+      Aliquet nulla sed consectetur in malesuada fermentum id. Non non lacus
+      enim risus sit.
     </p>
     <div class="instraction">
-        <div class="row">
-            <div class="col-4">
-                <img src="@/assets/left.png" class="img-fluid" alt="Instraction-1" />
-            </div>
-            <div class="col-4">
-                <img src="@/assets/front.png" class="img-fluid" alt="Instraction-2" />
-            </div>
-            <div class="col-4">
-                <img src="@/assets/right.png" class="img-fluid" alt="Instraction-3" />
-            </div>
+      <div class="row">
+        <div class="col-4">
+          <img src="@/assets/left.png" class="img-fluid" alt="Instraction-1" />
         </div>
-        <p class="instraction-text">Take your selfie from three different angle for the verification step</p>
-      <router-link to="/capture-image"><button type="button" class="btn btn-submit">Next</button></router-link>
+        <div class="col-4">
+          <img src="@/assets/front.png" class="img-fluid" alt="Instraction-2" />
+        </div>
+        <div class="col-4">
+          <img src="@/assets/right.png" class="img-fluid" alt="Instraction-3" />
+        </div>
+      </div>
+      <p class="instraction-text">
+        Take your selfie from three different angle for the verification step
+      </p>
+      <button type="button" class="btn btn-submit" @click="goToNext">
+        Next
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  created() {
+    if (this.$store.state.userStore.user && this.$store.state.userStore.user.name) {
+      this.$router.push("/image-registration-instruction");
+    } else {
+      this.$router.push("/");
+    }
+  },
+  methods: {
+    goToNext() {
+      if (this.$store.state.userStore.user && this.$store.state.userStore.user.name) {
+        this.$router.push("/capture-image");
+      } else {
+        this.$router.push("/");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -60,16 +82,16 @@ export default {};
   padding-bottom: 64px;
 }
 #image-registration-instraction .row {
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 }
-#image-registration-instraction .instraction-text{
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: center;
-    color: #79869F;
+#image-registration-instraction .instraction-text {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  color: #79869f;
 }
 
 #image-registration-instraction .btn-submit {

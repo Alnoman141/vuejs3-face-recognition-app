@@ -14,8 +14,10 @@
           <label for="name" class="form-label text-start">Name</label>
           <input
             id="name"
+            v-model="user.name"
             type="text"
             class="form-control"
+            required
             placeholder="Type your name"
           />
         </div>
@@ -23,20 +25,82 @@
           <label for="id" class="form-label text-start">ID No.</label>
           <input
             id="id"
+            v-model="user.id"
             type="text"
             class="form-control"
+            required
             placeholder="Type your emplyment ID"
           />
         </div>
-
-        <router-link to="/image-registration-instruction"><button type="button" class="btn btn-submit">Next</button></router-link>
+        <button type="button" class="btn btn-submit" @click="signup">
+          Next
+        </button>
       </form>
+    </div>
+  </div>
+  <!-- tost -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div
+      id="liveToast"
+      class="toast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="toast-body d-flex">
+        <div v-if="errorMsg" class="text-danger">{{ errorMsg }}</div>
+        <button
+          type="button"
+          class="btn-close me-2 m-auto text-danger"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import * as bootstrap from "bootstrap";
+export default {
+  data() {
+    return {
+      user: {
+        name: "",
+        id: "",
+      },
+      errorMsg: "",
+    };
+  },
+  methods: {
+    async signup() {
+      if (!this.user.name || !this.user.id) {
+        this.errorMsg = "Please insert all the field";
+        if (this.errorMsg) {
+          const toastLiveExample = document.getElementById("liveToast");
+          const toast = new bootstrap.Toast(toastLiveExample);
+          toast.show();
+        }
+      } else {
+        await this.$store
+          .dispatch("userStore/setUserData", this.user)
+          .then((response) => {
+            if(response.status === 200){
+              this.$router.push('/image-registration-instruction');
+            }
+          })
+          .catch((error) => {
+            this.errorMsg = error.response.data.error ? error.response.data.error : 'Error while registering new user. May be the user is exist.';
+            if (this.errorMsg) {
+              const toastLiveExample = document.getElementById("liveToast");
+              const toast = new bootstrap.Toast(toastLiveExample);
+              toast.show();
+            }
+          });
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

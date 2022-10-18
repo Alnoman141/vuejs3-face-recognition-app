@@ -15,46 +15,20 @@
       </div>
     </div>
     <div class="camera-frame">
-      <camera-component id="camera-component" />
+      <camera-component id="camera-component" ref="camera_component" />
       <button class="btn capture-btn">
-        <img src="@/assets/capture.png" class="img-fluid" alt="Instraction-2" />
+        <img
+          src="@/assets/capture.png"
+          class="img"
+          alt="Instraction-2"
+          @click="takePhoto"
+        />
       </button>
     </div>
     <div class="captured-images row">
-      <div class="col-sm-3 col-4">
-        <img
-          src="@/assets/logo-icon.png"
-          class="img-fluid"
-          alt="Instraction-2"
-        />
-      </div>
-      <div class="col-sm-3 col-4">
-        <img
-          src="@/assets/logo-icon.png"
-          class="img-fluid"
-          alt="Instraction-2"
-        />
-      </div>
-      <div class="col-sm-3 col-4">
-        <img
-          src="@/assets/logo-icon.png"
-          class="img-fluid"
-          alt="Instraction-2"
-        />
-      </div>
-      <div class="col-sm-3 col-4">
-        <img
-          src="@/assets/logo-icon.png"
-          class="img-fluid"
-          alt="Instraction-2"
-        />
-      </div>
-      <div class="col-sm-3 col-4">
-        <img
-          src="@/assets/logo-icon.png"
-          class="img-fluid"
-          alt="Instraction-2"
-        />
+      <div v-for="(image, index) in images.length > minImgLength ? images : minImgLength" :key="index" class="col-sm-3 col-4">
+        <img :src="images[index] ? images[index] : getImage('logo-icon.png')" class="img-fluid" alt="Instraction-2" />
+        <img v-if="images[index]" class="delete-image" :src="getImage('icons/delete.png')" alt="image" @click="removeImage(index)">
       </div>
     </div>
     <div class="buttons">
@@ -78,6 +52,37 @@
 import CameraComponent from "@/components/CameraComponent.vue";
 export default {
   components: { CameraComponent },
+  data() {
+    return {
+      minImgLength: 4,
+      images: [],
+    };
+  },
+  created() {
+    if (
+      this.$store.state.userStore.user &&
+      this.$store.state.userStore.user.name
+    ) {
+      this.$router.push("/capture-image");
+    } else {
+      this.$router.push("/");
+    }
+  },
+  mounted() {},
+  methods: {
+    takePhoto() {
+      this.$refs.camera_component.takePhoto();
+      if (this.$store.state.userStore.user.images.length > 0) {
+        this.images = this.$store.state.userStore.user.images;
+      }
+    },
+    getImage(image) {
+      return new URL(`/src/assets/${image}`, import.meta.url).href;
+    },
+    removeImage(index){
+      this.$store.dispatch('userStore/removeUserImage', index);
+    }
+  },
 };
 </script>
 
@@ -135,10 +140,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-#capture-image .captured-images .col-sm-3 .img-fluid {
-  width: 90px;
+#capture-image .captured-images .col-sm-3 .img {
+  width: 100%;
   height: 100%;
 }
 
@@ -147,5 +153,10 @@ button.btn.capture-btn {
   bottom: -12%;
   left: 50%;
   transform: translate(-50%);
+}
+img.delete-image {
+    position: absolute;
+    top: -10%;
+    right: 0;
 }
 </style>

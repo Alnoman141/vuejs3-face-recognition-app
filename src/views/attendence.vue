@@ -1,15 +1,19 @@
 <template>
   <div id="attendence">
-    <h2>Attendence</h2>
+    <camera-component class="camera-component" />
   </div>
 </template>
 
 <script>
+import CameraComponent from '@/components/CameraComponent.vue'
 export default {
-
+    components: { CameraComponent }
 }
 </script>
 
-<style>
-
+<style scoped>
+#attendence .camera-component {
+    height: 100vh;
+    overflow: hidden;
+}
 </style>

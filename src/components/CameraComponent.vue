@@ -60,7 +60,7 @@ export default {
       }
     },
     // capture images
-    async TakePhoto() {
+    async takePhoto() {
       let video = this.$refs.video;
       let canva = this.$refs.canva;
       let width = video.videoWidth;
@@ -78,13 +78,8 @@ export default {
       }
       ctx.restore();
 
-      let photo = {
-        id: this.id++,
-        type: "doc",
-        photo: "",
-        ocrData: [],
-        image: canva.toDataURL("image/jpeg"),
-      };
+      let photo = canva.toDataURL();
+      this.$store.dispatch('userStore/setUserImage', photo);
     },
   },
 };
@@ -93,13 +88,13 @@ export default {
 <style scoped>
 .camera-comp {
   width: 100%;
-  height: 500px;
+  height: 60vh;
   background: #fffefe;
 }
 video.video,
 canvas {
   width: 100% !important;
-  height: 100% !important;
+  height: 60vh !important;
   object-fit: cover;
   aspect-ratio: 1;
 }

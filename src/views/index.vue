@@ -28,7 +28,6 @@ export default {
     }
   },
   mounted(){
-    this.getUser();
   },
   methods: {
     async getUser(){
