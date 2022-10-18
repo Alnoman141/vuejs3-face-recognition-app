@@ -26,9 +26,25 @@
       </button>
     </div>
     <div class="captured-images row">
-      <div v-for="(image, index) in images.length > minImgLength ? images : minImgLength" :key="index" class="col-sm-3 col-4">
-        <img :src="images[index] ? images[index] : getImage('logo-icon.png')" class="img-fluid" alt="Instraction-2" />
-        <img v-if="images[index]" class="delete-image" :src="getImage('icons/delete.png')" alt="image" @click="removeImage(index)">
+      <div
+        v-for="(image, index) in images.length > minImgLength
+          ? images
+          : minImgLength"
+        :key="index"
+        class="col-sm-3 col-4"
+      >
+        <img
+          :src="images[index] ? images[index] : getImage('logo-icon.png')"
+          class="img-fluid"
+          alt="Instraction-2"
+        />
+        <img
+          v-if="images[index]"
+          class="delete-image"
+          :src="getImage('icons/delete.png')"
+          alt="image"
+          @click="removeImage(index)"
+        />
       </div>
     </div>
     <div class="buttons">
@@ -39,9 +55,7 @@
           >
         </div>
         <div class="col-6 text-md-start">
-          <router-link to="/register-complete"
-            ><button class="btn btn-next">Next</button></router-link
-          >
+          <button class="btn btn-next" @click="register">Next</button>
         </div>
       </div>
     </div>
@@ -79,9 +93,40 @@ export default {
     getImage(image) {
       return new URL(`/src/assets/${image}`, import.meta.url).href;
     },
-    removeImage(index){
-      this.$store.dispatch('userStore/removeUserImage', index);
-    }
+    removeImage(index) {
+      this.$store.dispatch("userStore/removeUserImage", index);
+    },
+    async register() {
+      let userData = {
+        id: this.$store.state.userStore.user.id,
+        name: this.$store.state.userStore.user.name,
+      };
+      if (userData.name) {
+        await this.$store
+          .dispatch("userStore/register", userData)
+          .then((response) => {
+            if (response.status === 200) {
+              this.images.map(async (img) => {
+                let upload = {
+                  user: this.$store.state.userStore.user.name,
+                  content: img,
+                };
+                await this.$store
+                  .dispatch("userStore/uploadImage", upload)
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    console.log("err =>", err);
+                  });
+              });
+            }
+          })
+          .catch((error) => {
+            console.log("error =>", error);
+          });
+      }
+    },
   },
 };
 </script>
@@ -155,8 +200,8 @@ button.btn.capture-btn {
   transform: translate(-50%);
 }
 img.delete-image {
-    position: absolute;
-    top: -10%;
-    right: 0;
+  position: absolute;
+  top: -10%;
+  right: 0;
 }
 </style>

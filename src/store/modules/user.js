@@ -1,3 +1,4 @@
+import { register, uploadImage } from "@/api/user";
 export default {
   namespaced: true,
   state: {
@@ -49,6 +50,24 @@ export default {
         commit("REMOVE_USER_IMAGES", index);
         resolve({ message: "image remove done", status: 200 });
       });
+    },
+    register({state, commit}, data){
+        return new Promise((resolve, reject) => {
+            register(data).then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            }) 
+        })
+    },
+    uploadImage({state, commit}, data) {
+        return new Promise((resolve, reject) => {
+            uploadImage(data).then(response => {
+                resolve(resolve)
+            }).catch(error => {
+                reject(error)
+            })
+        })
     },
     getUser({ state, commit }, data) {
       commit("SET_USER", data);

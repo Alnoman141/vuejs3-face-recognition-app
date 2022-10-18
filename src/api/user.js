@@ -7,3 +7,11 @@ export function register(data){
         data
     })
 }
+
+export function uploadImage(data) {
+  return request({
+    url: "/user/uploadBase64",
+    method: "post",
+    data: { upload: data },
+  });
+}
