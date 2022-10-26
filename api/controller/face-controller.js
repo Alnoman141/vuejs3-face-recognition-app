@@ -25,7 +25,7 @@ modelRoutes.get('/getAll', (req, res) => {
     })
 })
 
-modelRoutes.post('/save', async (req, res) => {
+modelRoutes.post('/save', (req, res) => {
   res.header('Content-Type', 'application/json')
   // const content = JSON.stringify(req.body.faces)
   // Create a user

@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted () {
+
   },
   methods: {
     async getUser () {

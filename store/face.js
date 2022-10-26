@@ -126,6 +126,7 @@ export const actions = {
   async recognize ({ commit, state }, { descriptor, options }) {
     if (options.descriptorsEnabled) {
       const bestMatch = await state.faceMatcher.findBestMatch(descriptor)
+      console.log(bestMatch.toString())
       return bestMatch
     }
     return null

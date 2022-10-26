@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("user", {
+  const User = sequelize.define('user', {
     name: {
       type: Sequelize.STRING
     },
@@ -7,9 +7,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     descriptors: {
-      type: Sequelize.TEXT("long")
+      type: Sequelize.TEXT('long')
     }
-  });
+  })
 
-  return User;
-};
+  return User
+}

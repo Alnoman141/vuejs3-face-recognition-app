@@ -2,13 +2,19 @@
   <div id="attendence">
     <video id="live-video" class="d-none" width="320" height="247" autoplay />
     <canvas id="live-canvas" width="320" height="247" />
+    <client-only>
+      <textToSpeatch ref="Speatch" :welcomeMsg="welcomeMsg" />
+    </client-only>
   </div>
 </template>
 
 <script>
+import textToSpeatch from '../components/textToSpeatch.vue'
 export default {
+  components: { textToSpeatch },
   data () {
     return {
+      welcomeMsg: '',
       interval: null,
       fps: 15,
       realFps: 0,
@@ -16,9 +22,10 @@ export default {
       counter: 0,
       progress: 0,
       duration: 0,
-      isProgressActive: true,
+      isProgressActive: false,
       recognition: '',
-      withOptions: [0, 1, 2, 3]
+      withOptions: [0, 1, 2, 3],
+      attendenceProcessing: false
     }
   },
   watch: {
@@ -46,6 +53,12 @@ export default {
     this.$store.dispatch('camera/stopCamera')
   },
   methods: {
+    sendWelcome () {
+      if (this.$refs.Speatch && this.$refs.Speatch.speak) {
+        this.$refs.Speatch.speak()
+        this.isProgressActive = false
+      }
+    },
     start (videoDiv, canvasDiv, canvasCtx, fps) {
       const self = this
       if (self.interval) {
@@ -53,32 +66,35 @@ export default {
       }
       self.interval = setInterval(async () => {
         const t0 = performance.now()
-        canvasCtx.drawImage(videoDiv, 0, 0, 320, 247)
-        const options = {
-          detectionsEnabled: self.withOptions.find(o => o === 0) === 0,
-          landmarksEnabled: self.withOptions.find(o => o === 1) === 1,
-          descriptorsEnabled: self.withOptions.find(o => o === 2) === 2,
-          expressionsEnabled: self.withOptions.find(o => o === 3) === 3
-        }
-        const detections = await self.$store.dispatch('face/getFaceDetections', { canvas: canvasDiv, options })
-        if (detections.length) {
-          if (self.isProgressActive) {
-            self.increaseProgress()
-            self.isProgressActive = false
+        if (!self.isProgressActive) {
+          canvasCtx.drawImage(videoDiv, 0, 0, 320, 247)
+          const options = {
+            detectionsEnabled: self.withOptions.find(o => o === 0) === 0,
+            landmarksEnabled: self.withOptions.find(o => o === 1) === 1,
+            descriptorsEnabled: self.withOptions.find(o => o === 2) === 2,
+            expressionsEnabled: self.withOptions.find(o => o === 3) === 3
           }
-          detections.forEach(async (detection) => {
-            detection.recognition = await self.$store.dispatch('face/recognize', {
-              descriptor: detection.descriptor,
-              options
-            })
-            self.$store.dispatch('face/draw',
-              {
-                canvasDiv,
-                canvasCtx,
-                detection,
+          const detections = await self.$store.dispatch('face/getFaceDetections', { canvas: canvasDiv, options })
+          if (detections.length) {
+            detections.forEach(async (detection) => {
+              detection.recognition = await self.$store.dispatch('face/recognize', {
+                descriptor: detection.descriptor,
                 options
               })
-          })
+              if (detection.recognition.label !== 'unknown') {
+                self.isProgressActive = true
+                self.welcomeMsg = `Welcome, ${detection.recognition.label}`
+                self.sendWelcome()
+              }
+              self.$store.dispatch('face/draw',
+                {
+                  canvasDiv,
+                  canvasCtx,
+                  detection,
+                  options
+                })
+            })
+          }
         }
         const t1 = performance.now()
         self.duration = (t1 - t0).toFixed(2)
