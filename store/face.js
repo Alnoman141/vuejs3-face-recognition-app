@@ -68,7 +68,8 @@ export const actions = {
     const faces = []
     data.forEach((element) => {
       const face = {
-        id: element.id_number,
+        id: element.id,
+        id_number: element.id_number,
         user: element.name,
         descriptors: JSON.parse(element.descriptors)
       }
@@ -95,7 +96,7 @@ export const actions = {
       if (descriptors.length) {
         labeledDescriptors.push(
           new faceapi.LabeledFaceDescriptors(
-            face.user,
+            face.user + '|' + face.id,
             descriptors
           ))
       }
@@ -126,7 +127,6 @@ export const actions = {
   async recognize ({ commit, state }, { descriptor, options }) {
     if (options.descriptorsEnabled) {
       const bestMatch = await state.faceMatcher.findBestMatch(descriptor)
-      console.log(bestMatch.toString())
       return bestMatch
     }
     return null

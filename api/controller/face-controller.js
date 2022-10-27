@@ -1,13 +1,13 @@
-const { writeFileSync } = require('fs')
-const { join } = require('path')
+// const { writeFileSync } = require('fs')
+// const { join } = require('path')
 const express = require('express')
 const db = require('../models')
 const modelRoutes = express.Router()
 
 // folders & model file
-const rootFolder = join(__dirname, '../../')
-const dataFolder = join(rootFolder, 'data')
-const facesFileName = 'faces.json'
+// const rootFolder = join(__dirname, '../../')
+// const dataFolder = join(rootFolder, 'data')
+// const facesFileName = 'faces.json'
 const User = db.users
 
 modelRoutes.get('/getAll', (req, res) => {

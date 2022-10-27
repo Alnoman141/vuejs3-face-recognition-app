@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import textToSpeatch from '../components/textToSpeatch.vue'
+import textToSpeatch from '../components/TextToSpeatch.vue'
 export default {
   components: { textToSpeatch },
   data () {
@@ -56,8 +56,16 @@ export default {
     sendWelcome () {
       if (this.$refs.Speatch && this.$refs.Speatch.speak) {
         this.$refs.Speatch.speak()
-        this.isProgressActive = false
       }
+    },
+    async giveAttendence (user) {
+      await this.$store.dispatch('attendence/save', user).then((res) => {
+        if (res.status === 200 && res.data.name) {
+          this.welcomeMsg = `Welcome, ${res.data.name}`
+          this.sendWelcome()
+          this.isProgressActive = false
+        }
+      })
     },
     start (videoDiv, canvasDiv, canvasCtx, fps) {
       const self = this
@@ -81,10 +89,17 @@ export default {
                 descriptor: detection.descriptor,
                 options
               })
-              if (detection.recognition.label !== 'unknown') {
+              const userId = detection.recognition.label.split('|')[1]
+              detection.recognition._label = detection.recognition.label.split('|')[0]
+              if (userId && detection.recognition.label !== 'unknown') {
                 self.isProgressActive = true
-                self.welcomeMsg = `Welcome, ${detection.recognition.label}`
-                self.sendWelcome()
+                if (self.isProgressActive) {
+                  const user = {
+                    user_id: userId,
+                    name: detection.recognition.label
+                  }
+                  self.giveAttendence(user)
+                }
               }
               self.$store.dispatch('face/draw',
                 {

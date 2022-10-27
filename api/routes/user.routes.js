@@ -1,13 +1,23 @@
-module.exports = app => {
-  const tutorials = require("../controller/face-controller");
+module.exports = (app) => {
+  const face = require('../controller/face-controller')
+  const attendence = require('../controller/attendence-controller')
 
-  const router = require("express").Router();
+  const FaceRouter = require('express').Router()
+  const AttendenceRouter = require('express').Router()
 
-  // Create a new Tutorial
-  router.post("/save", tutorials.create);
+  // Create a new Face
+  FaceRouter.post('/save', face.create)
 
-  // Retrieve all Tutorials
-  router.get("/", tutorials.findAll);
+  // Retrieve all Faces
+  FaceRouter.get('/', face.findAll)
 
-  app.use("/api/face", router);
-};
+  // Create a new attendence
+  AttendenceRouter.post('/save', attendence.create)
+
+  // Retrieve all attendence
+  AttendenceRouter.get('/', attendence.findAll)
+
+  app.use('/api/face', FaceRouter)
+
+  app.use('/api/attendence', AttendenceRouter)
+}

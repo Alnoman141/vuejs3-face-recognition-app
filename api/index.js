@@ -50,8 +50,11 @@ db.sequelize
 
 // API routes
 const apiRoutes = express.Router()
+// face routes
 apiRoutes.use('/user', require('./controller/user-controller'))
 apiRoutes.use('/face', require('./controller/face-controller'))
+apiRoutes.use('/attendence', require('./controller/attendence-controller'))
+
 app.use('/api', apiRoutes)
 
 module.exports = {
