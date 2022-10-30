@@ -9,12 +9,18 @@ module.exports = (sequelize, Sequelize) => {
     date: {
       type: Sequelize.STRING
     },
-    in_time: {
+    time: {
       type: Sequelize.TEXT
     },
-    out_time: {
-      type: Sequelize.TEXT
+    status: {
+      type: Sequelize.ENUM('in', 'out')
     }
+    // in_time: {
+    //   type: Sequelize.TEXT
+    // },
+    // out_time: {
+    //   type: Sequelize.TEXT
+    // }
   })
 
   return Attendence

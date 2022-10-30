@@ -65,6 +65,10 @@ export default {
           this.sendWelcome()
           this.isProgressActive = false
         }
+      }).catch((error) => {
+        this.welcomeMsg = `${error.response.data.message}`
+        this.sendWelcome()
+        this.isProgressActive = false
       })
     },
     start (videoDiv, canvasDiv, canvasCtx, fps) {

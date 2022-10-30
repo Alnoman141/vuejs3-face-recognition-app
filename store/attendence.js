@@ -17,8 +17,12 @@ export default {
   actions: {
     save ({ state, commit }, data) {
       return new Promise((resolve, reject) => {
-        this.$axios.$post('/api/attendence/save', data)
-        resolve({ message: 'User attendence done', status: 200, data })
+        this.$axios.$post('/api/attendence/save', data).then((response) => {
+          resolve(response)
+        }).catch((error) => {
+          reject(error)
+        })
+        // resolve({ message: 'User attendence done', status: 200, data })
       })
     }
   },
