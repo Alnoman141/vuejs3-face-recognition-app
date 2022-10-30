@@ -1,18 +1,12 @@
 <template>
   <v-app dark>
-    <v-content>
+    <v-content class="main-con">
       <v-container>
-        <!-- <v-progress-circular
-          v-if="loading"
-          :size="200"
-          :width="20"
-          color="red"
-          indeterminate
-        >
-          Loading 7MB models.
-          <br>
-          Please be patient...
-        </v-progress-circular> -->
+        <div v-if="loading" class="d-flex justify-content-center align-center loader">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <nuxt />
       </v-container>
     </v-content>
@@ -38,3 +32,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.main-con {
+  position: relative;
+}
+</style>

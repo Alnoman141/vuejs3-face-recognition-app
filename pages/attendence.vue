@@ -129,19 +129,8 @@ export default {
           videoDiv.srcObject = stream
           this.start(videoDiv, canvasDiv, canvasCtx, self.fps)
         })
-    },
-
-    increaseProgress () {
-      const self = this
-      self.progress = (100 / self.step) * ++self.counter
     }
   }
-  // computed: {
-  //   models () {
-  //     console.log(this.$store.state.model)
-  //     return 1
-  //   }
-  // }
 }
 </script>
 

@@ -1,5 +1,10 @@
 <template>
   <div id="capture-image">
+    <div v-if="loading" class="d-flex justify-content-center align-center loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div class="header">
       <div class="row d-flex justify-content-center align-items-center">
         <div class="col-2">
@@ -60,7 +65,7 @@
           </router-link>
         </div>
         <div class="col-6 text-md-start">
-          <button @click="register" class="btn btn-next">
+          <button :disabled="images.length === 0" @click="register" class="btn btn-next">
             Next
           </button>
         </div>
@@ -76,6 +81,7 @@ export default {
   data () {
     return {
       minImgLength: 4,
+      loading: false,
       images: []
     }
   },
@@ -101,6 +107,7 @@ export default {
       this.$store.dispatch('user/removeUserImage', index)
     },
     async register () {
+      this.loading = true
       const userData = {
         id: this.$store.state.user.user.id,
         name: this.$store.state.user.user.name
@@ -121,6 +128,7 @@ export default {
           })
           .catch((error) => {
             console.log('error =>', error)
+            this.loading = false
           })
       }
       setTimeout(() => {
@@ -167,6 +175,7 @@ export default {
         await this.$store.dispatch('face/save', faces)
           .then(() => {
             this.$router.push('/attendence')
+            this.loading = false
             console.log('trained successfully')
           })
           .catch((e) => {
@@ -174,6 +183,7 @@ export default {
           })
       } else {
         console.log('no face found')
+        this.loading = false
       }
     }
   }
