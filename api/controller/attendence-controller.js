@@ -121,8 +121,8 @@ modelRoutes.post('/save', async (req, res) => {
     const fiveMinutesLater =
       new Date(recentSameUser.createdAt).getTime() + 5 * 60 * 1000
     if (fiveMinutesLater > new Date(Date.now()).getTime()) {
-      res.status(400).send({
-        status: 400,
+      res.status(310).send({
+        status: 310,
         message: 'Attendence taken!'
       })
     } else {

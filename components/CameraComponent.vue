@@ -88,15 +88,14 @@ export default {
 <style scoped>
 .camera-comp {
   width: 100%;
-  height: 60vh;
+  height: 55vh;
   background: #fffefe;
 }
 video.video,
 canvas {
   width: 100% !important;
-  height: 60vh !important;
+  height: 55vh !important;
   object-fit: cover;
-  aspect-ratio: 1;
 }
 .canvas {
   height: 100% !important;

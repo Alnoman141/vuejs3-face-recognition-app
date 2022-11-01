@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-content class="main-con">
+    <v-content class="main-con vh-100">
       <v-container>
         <div v-if="loading" class="d-flex justify-content-center align-center loader">
           <div class="spinner-border" role="status">

@@ -10,6 +10,9 @@ env.API_URL = process.env.API_URL || `http://localhost:${env.PORT_API}`
 const isDev = env.NODE_ENV === 'development'
 const config = {
   mode: 'universal',
+  server: {
+    host: '0' // default: localhost
+  },
 
   /*
    ** Headers of the page

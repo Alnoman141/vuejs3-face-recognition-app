@@ -15,6 +15,7 @@ module.exports = {
     'no-extra-semi': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/no-v-html': 'off'
+    'vue/no-v-html': 'off',
+    'eslint no-floating-decimal': 'off',
   }
 }

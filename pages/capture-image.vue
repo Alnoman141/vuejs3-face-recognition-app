@@ -236,8 +236,8 @@ export default {
   align-self: center;
   width: 100%;
   overflow-x: scroll;
-  margin: 35px 0px;
-  padding: 20px 0px;
+  margin: 40px 0px 0px;
+  padding: 25px 0px 0px;
 }
 .col-sm-3,
 .col-4 {

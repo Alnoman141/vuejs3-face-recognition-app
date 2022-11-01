@@ -3,15 +3,15 @@
     <video id="live-video" class="d-none" width="320" height="247" autoplay />
     <canvas id="live-canvas" width="320" height="247" />
     <client-only>
-      <textToSpeatch ref="Speatch" :welcomeMsg="welcomeMsg" />
+      <text-to-speatch ref="Speatch" :welcomeMsg="welcomeMsg" />
     </client-only>
   </div>
 </template>
 
 <script>
-import textToSpeatch from '../components/TextToSpeatch.vue'
+import TextToSpeatch from '~/components/TextToSpeatch.vue'
 export default {
-  components: { textToSpeatch },
+  components: { TextToSpeatch },
   data () {
     return {
       welcomeMsg: '',
@@ -95,7 +95,7 @@ export default {
               })
               const userId = detection.recognition.label.split('|')[1]
               detection.recognition._label = detection.recognition.label.split('|')[0]
-              if (userId && detection.recognition.label !== 'unknown') {
+              if (userId && detection.recognition.distance < 0.50 && detection.recognition.label !== 'unknown') {
                 self.isProgressActive = true
                 if (self.isProgressActive) {
                   const user = {
@@ -118,7 +118,7 @@ export default {
         const t1 = performance.now()
         self.duration = (t1 - t0).toFixed(2)
         self.realFps = (1000 / (t1 - t0)).toFixed(2)
-      }, 1000 / fps)
+      })
     },
     async recognize () {
       const videoDiv = document.getElementById('live-video')
@@ -136,12 +136,26 @@ export default {
 
 <style scoped>
 #attendence .camera-component {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-#live-canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+#live-canvas {
+  /* Make video to at least 100% wide and tall */
+  min-width: 100%;
+  min-height: 100%;
+
+  /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+  width: auto;
+  height: auto;
+
+  /* Center the video */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>

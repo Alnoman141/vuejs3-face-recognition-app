@@ -1,6 +1,6 @@
 <template>
-  <div class="index">
-    <div class="content">
+  <div class="index vh-100 d-flex justify-content-center align-items-center">
+    <div class="content w-100 text-center">
       <img src="@/assets/logo.png" class="img-fluid logo" alt="image-1">
       <div class="buttons">
         <div class="row">
@@ -49,18 +49,7 @@ export default {
 </script>
 
 <style scoped>
-.index {
-  position: relative;
-  height: 100vh;
-}
-.content {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform:translate(-50%, -50%);
-  text-align: center;
-}
+
 .logo {
   margin-bottom: 30px;
 }
